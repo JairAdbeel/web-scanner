@@ -1,6 +1,6 @@
 // Configuración
-const API_URL = 'http://localhost:5000/api';
-console.log('🌐 Conectando a:', API_URL); // Para verificar // Cambia TU_USUARIO cuando despliegues
+const API_URL = window.location.origin + '/api';
+console.log('🌐 Conectando a:', API_URL);// Para verificar // Cambia TU_USUARIO cuando despliegues
 
 // Estado de la aplicación
 let state = {
