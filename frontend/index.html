@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scanner - Convertidor de Imágenes a PDF</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Konva.js para manipulación de canvas -->
+    <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 Web Scanner</h1>
+            <p>Selecciona las 4 esquinas del documento en cada imagen</p>
+        </header>
+
+        <!-- Paso 1: Subir imágenes -->
+        <div id="step1" class="step active">
+            <h2>Paso 1: Subir imágenes</h2>
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="fileInput" multiple accept="image/*" hidden>
+                <p>Arrastra tus imágenes aquí o</p>
+                <button id="selectFilesBtn">Seleccionar archivos</button>
+            </div>
+            <div id="previewList" class="preview-list"></div>
+            <button id="continueBtn" class="btn-primary" disabled>Continuar</button>
+        </div>
+
+        <!-- Paso 2: Seleccionar puntos -->
+        <div id="step2" class="step">
+            <h2>Paso 2: Selecciona las 4 esquinas</h2>
+            <div class="navigation">
+                <button id="prevBtn" class="btn-secondary" disabled>← Anterior</button>
+                <span id="imageCounter">Imagen 1 de <span id="totalImages">0</span></span>
+                <button id="nextBtn" class="btn-secondary">Siguiente →</button>
+            </div>
+            
+            <div class="canvas-container">
+                <div id="canvasContainer"></div>
+                <div class="instructions">
+                    <p>🖱️ Haz clic en las 4 esquinas en orden:</p>
+                    <ol>
+                        <li>Arriba izquierda</li>
+                        <li>Arriba derecha</li>
+                        <li>Abajo derecha</li>
+                        <li>Abajo izquierda</li>
+                    </ol>
+                    <div id="pointsStatus" class="points-status">Puntos seleccionados: 0/4</div>
+                </div>
+            </div>
+            
+            <button id="processBtn" class="btn-primary" disabled>Procesar todas y generar PDF</button>
+        </div>
+
+        <!-- Paso 3: Procesamiento y descarga -->
+        <div id="step3" class="step">
+    <h2>Paso 3: Generando PDF</h2>
+    
+    <!-- Campo para nombre del archivo (visible antes de procesar) -->
+    <div class="filename-input" id="filenameSection">
+        <label for="pdfFilename">📄 Nombre del archivo PDF:</label>
+        <div class="input-group">
+            <input type="text" id="pdfFilename" placeholder="ej: documento_escaneado" value="documento_escaneado">
+            <span class="extension">.pdf</span>
+        </div>
+        <p class="input-hint">Sin espacios, usa guiones bajos o medios</p>
+    </div>
+    
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p id="processingStatus">Procesando imágenes...</p>
+    </div>
+    
+    <div id="result" class="result" style="display: none;">
+        <h3>✅ ¡PDF generado exitosamente!</h3>
+        <p>Se generaron <span id="pageCount">0</span> páginas</p>
+        
+        <!-- Mostrar nombre elegido -->
+        <p class="filename-display" id="filenameDisplay"></p>
+        
+        <!-- Botón principal de descarga -->
+        <button id="downloadBtn" class="btn-primary">
+            ⬇️ DESCARGAR PDF
+        </button>
+        
+        <!-- Opción de cambiar nombre antes de descargar -->
+        <div class="rename-section" style="margin: 20px 0;">
+            <p style="color: #666; margin-bottom: 10px;">¿Otro nombre?</p>
+            <div class="input-group small">
+                <input type="text" id="renameFilename" placeholder="nuevo_nombre">
+                <button id="renameBtn" class="btn-secondary">Cambiar</button>
+            </div>
+        </div>
+        
+        <!-- Link alternativo -->
+        <p style="margin: 10px 0; color: #999;">o</p>
+        <a id="downloadLink" style="color: #667eea; text-decoration: underline; cursor: pointer;">
+            Descargar con nombre original
+        </a>
+        
+        <button id="newScanBtn" class="btn-secondary" style="margin-top: 30px;">
+            Nuevo escaneo
+        </button>
+    </div>
+</div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

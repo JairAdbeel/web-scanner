@@ -1,0 +1,499 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 10px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    padding: 15px;
+}
+
+/* Mobile First - estilos base para móvil */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+header p {
+    color: #666;
+    font-size: 0.95em;
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+h2 {
+    color: #444;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+}
+
+/* Upload area - optimizado para dedos */
+.upload-area {
+    border: 3px dashed #ccc;
+    border-radius: 15px;
+    padding: 30px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #f9f9f9;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.upload-area:active {
+    background: #f0f3ff;
+    transform: scale(0.98);
+}
+
+.upload-area p {
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Botones - área táctil grande */
+button {
+    padding: 15px 25px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+    min-width: 200px;
+    max-width: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+    transform: scale(0.96);
+    opacity: 0.9;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.4;
+    transform: none;
+    pointer-events: none;
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #666;
+}
+
+/* Preview de imágenes - grid responsivo */
+.preview-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.preview-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    aspect-ratio: 1;
+}
+
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-item .remove-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255,0,0,0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    min-width: unset;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Navegación - mejorada para móvil */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.navigation button {
+    min-width: 100px;
+    padding: 12px 15px;
+    font-size: 0.95em;
+}
+
+#imageCounter {
+    font-size: 1em;
+    color: #666;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Canvas container - con soporte para zoom */
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#canvasContainer {
+    background: #f5f5f5;
+    border-radius: 15px;
+    overflow: auto;
+    width: 100%;
+    height: 60vh;  /* Altura fija en móvil */
+    position: relative;
+    touch-action: pan-y pinch-zoom;  /* Permitir zoom y scroll vertical */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Controles de zoom */
+.zoom-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.zoom-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background: #667eea;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: unset;
+    box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+}
+
+.zoom-btn:active {
+    background: #5a6fd8;
+}
+
+/* Instrucciones - tarjeta informativa */
+.instructions {
+    background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 5px solid #667eea;
+}
+
+.instructions p {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.instructions ol {
+    margin: 15px 0;
+    padding-left: 25px;
+    color: #555;
+}
+
+.instructions li {
+    margin: 12px 0;
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+.points-status {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #667eea;
+    margin-top: 15px;
+    text-align: center;
+    padding: 10px;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Resultado */
+.result {
+    text-align: center;
+    padding: 30px 15px;
+}
+
+.result h3 {
+    color: #28a745;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.result p {
+    margin-bottom: 25px;
+    color: #666;
+    font-size: 1.1em;
+}
+
+#downloadLink {
+    color: #667eea;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+#downloadLink:hover {
+    color: #764ba2;
+}
+
+/* Ajustes para tablets (pantallas más grandes) */
+@media (min-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+    
+    header h1 {
+        font-size: 2.5em;
+    }
+    
+    .canvas-container {
+        flex-direction: row;
+    }
+    
+    #canvasContainer {
+        height: 70vh;
+        flex: 2;
+    }
+    
+    .instructions {
+        flex: 1;
+        height: fit-content;
+    }
+    
+    .zoom-controls {
+        display: none;  /* Ocultar botones zoom en desktop (ya hay rueda mouse) */
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 380px) {
+    .navigation {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .navigation button {
+        min-width: 130px;
+    }
+    
+    #imageCounter {
+        width: 100%;
+        order: -1;
+        margin-bottom: 10px;
+    }
+}
+
+/* Clases para puntos en móvil - más grandes */
+.konva-circle {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.konva-circle:active {
+    transform: scale(1.2);
+}
+
+/* Toast para feedback táctil */
+.toast-message {
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 15px;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 1.1em;
+    z-index: 1000;
+    animation: slideUp 0.3s ease;
+}
+
+/* Añade esto a frontend/css/style.css */
+#downloadBtn {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    font-size: 1.3em;
+    padding: 20px 40px;
+    animation: pulse 2s infinite;
+    box-shadow: 0 4px 20px rgba(40, 167, 69, 0.4);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Estilos para el campo de nombre */
+.filename-input {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.filename-input label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.input-group .extension {
+    background: #667eea;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.input-hint {
+    margin-top: 8px;
+    font-size: 0.85em;
+    color: #888;
+}
+
+/* Para el campo de renombrar */
+.input-group.small input {
+    padding: 10px;
+    font-size: 0.9em;
+}
+
+.input-group.small button {
+    padding: 10px 20px;
+    min-width: unset;
+    font-size: 0.9em;
+}
+
+.filename-display {
+    background: #e8f5e9;
+    color: #28a745;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin: 15px 0;
+    word-break: break-all;
+}
+
+.rename-section {
+    background: #f0f3ff;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 15px 0;
+}
